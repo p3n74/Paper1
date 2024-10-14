@@ -2,14 +2,12 @@
 
 \bibitem{Amin2019}
 Adnan Amin, F.~Al-Obeidat, B.~Shah, A.~Adnan, Jonathan Loo, and S.~Anwar.
-\newblock Customer churn prediction in telecommunication industry using data
-  certainty.
+\newblock Customer churn prediction in telecommunication industry using data certainty.
 \newblock {\em Journal of Business Research}, 2019.
 
 \bibitem{Burez2007}
 Jonathan Burez and D.~V. Poel.
-\newblock Crm at a pay-tv company: Using analytical models to reduce customer
-  attrition by targeted marketing for subscription services.
+\newblock Crm at a pay-tv company: Using analytical models to reduce customer attrition by targeted marketing for subscription services.
 \newblock {\em Expert Systems with Applications}, 2007.
 
 \bibitem{Lalwani2021}
@@ -28,16 +26,13 @@ Jitendra Maan and Harsh Maan.
 \newblock {\em arXiv preprint arXiv:2303.00960}, 2023.
 
 \bibitem{Makhtar2018}
-M.~Makhtar, S.~Nafis, M.~A. Mohamed, M.~K. Awang, Mohd Nordin~Abdul Rahman, and
-  M.~M. Deris.
-\newblock Churn classification model for local telecommunication company based
-  on rough set theory.
+M.~Makhtar, S.~Nafis, M.~A. Mohamed, M.~K. Awang, Mohd Nordin~Abdul Rahman, and M.~M. Deris.
+\newblock Churn classification model for local telecommunication company based on rough set theory.
 \newblock {\em Semantic Scholar}, 2018.
 
 \bibitem{Umayaparvathi2016}
 V.~Umayaparvathi and K.~Iyakutti.
-\newblock A survey on customer churn prediction in telecom industry: Datasets,
-  methods and metrics.
+\newblock A survey on customer churn prediction in telecom industry: Datasets, methods and metrics.
 \newblock {\em Semantic Scholar}, 2016.
 
 \end{thebibliography}

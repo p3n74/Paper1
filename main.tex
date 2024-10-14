@@ -153,30 +153,34 @@ to aid a business in designing customer retention strategies.
     \begin{itemize}
         \item \textbf{Description:} This is the first layer of the neural network. It inputs the row data or features of the dataset into the model.
         \item \textbf{Structure:} This consists of n Neurons where n is the number of features / columns in the dataset.
-        \item \textbf{Function:} Data entry without performing computations.
+        \item \textbf{Function:} This serves as a data entry point without affecting any of the data.
     \end{itemize}
-
+    \vspace{1cm}
     \item \textbf{First Hidden Layer:}
     \begin{itemize}
         \item \textbf{Activation Function:} Rectified Linear Unit (ReLU)
         \item \textbf{Definition:} \( f(x) = \max(0, x) \)
-        \item \textbf{Purpose:} Introduces non-linearity, mitigates the vanishing gradient problem, and allows the model to learn complex patterns.
+        \item \textbf{Purpose:} This is the first hidden layer of the model. In this layer we aim to introduce non-linearity into the model in the data.
+        This is so that we mitigate the vanishing gradient problem and allow this model to learn complex patterns in the dataset.
+        \item \textbf{Structure:}96 neurons.
     \end{itemize}
-
+    \vspace{1cm}
     \item \textbf{Second and Third Hidden Layers:}
     \begin{itemize}
         \item \textbf{Activation Function:} Sigmoid
         \item \textbf{Definition:} \( f(x) = \frac{1}{1 + e^{-x}} \)
         \item \textbf{Purpose:} Maps input values to a range between 0 and 1, useful for learning intermediate representations and refining features.
+        \item \textbf{Structure:}First: 96 Neurons, Second: 64 Neurons.
     \end{itemize}
-
+    \vspace{1cm}
     \item \textbf{Final Hidden Layer:}
     \begin{itemize}
         \item \textbf{Activation Function:} Softmax
         \item \textbf{Definition:} \( f(x_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}} \) for each class \( i \)
         \item \textbf{Purpose:} Converts raw output scores into probabilities, providing a probability distribution over possible classes, crucial for predicting customer churn.
+        \item \textbf{Structure:}2 neurons.
     \end{itemize}
-
+    \vspace{1cm}
     \item \textbf{Output Layer:}
     \begin{itemize}
         \item \textbf{Structure:} Consists of two neurons, each representing one class: churn and non-churn.
@@ -199,9 +203,269 @@ to aid a business in designing customer retention strategies.
     \end{itemize}
 \end{itemize}
 
+\newpage
 \section{Activation Functions}
+\subsection{Rectified Linear Unit (ReLU)}
 
+    \paragraph{Definition:}
+     The Rectified Linear Unit (ReLU) is denoted as 
+
+     \begin{center}
+        \bf \( f(x) = \max(0, x) \)  
+     \end{center}
+
+     This function simply returns 0 if the input is negative
+     and returns the input if the input is positive. In simple terms
+     it just removes all negative values in the input.
+
+     With this, we introduce non-linearity into the model.
+
+     \paragraph{How does it introduce non-linearity?}
+     \begin{itemize}
+        \item The function has a non-linear behavior and such has a non-linear shape
+        where it has a bend in the line at x = 0.
+        \item Breaking linear combinations of inputs. Without this function, the overall
+        network will be linear no matter how many hidden layers there are.
+        \item Activation Sparsity. Since the function returns 0 for all negative inputs,
+        that means that in a layer it is probable that only some neurons will be activated
+        for any input. This creates sparsity in the activations of the neurons.
+        \item In this function, there is a binary nature of the function gradient. 0 for
+        negative inputs and 1 for positive inputs. This binary gradient
+        introduces non-linearity to the backpropagation process thus affecting how the 
+        network learns
+     \end{itemize}
+    
+     Non-lineariy is important in neural networks as it allows it to learn
+     and represent more complex relationships between features in the dataset.
+     This is especially important in the case of the problem that we are trying to solve.
+
+
+
+\newpage
 \section{Mathematical Formulation}
+
+\subsection{ReLU}
+     \paragraph{Proof:}
+
+     Let \( f(x) = \max(0, x) \)
+
+     \[
+     f(x) = max \begin{Bmatrix}
+        0, & x \le 0 \\
+        x, & x \geq 0   
+     \end{Bmatrix}
+    \]
+
+    where
+    \[
+    f'(x) = \begin{Bmatrix}
+        0 & for & x < 0 \\
+        1 & for & x > 0 \\
+        undefined & for & x = 0
+    \end{Bmatrix}
+    \]
+
+    let \( x < 0 \)
+
+    \[
+    f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+    \]
+    \[
+    f'(x) = \lim_{h \to 0} \frac{max(0, x + h) - max(0, x)}{h}
+    \]
+    \[
+    f'(x) = \lim_{h \to 0} \frac{0 - 0}{h} = 0
+    \]
+
+    let \( x > 0 \)
+    \[
+    f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
+    \]
+    \[
+    f'(x) = \lim_{h \to 0} \frac{max(0, x + h) - max(0, x)}{h}
+    \]
+    \[
+    f'(x) = \lim_{h \to 0} \frac{x + h - x}{h} = 1
+    \]
+
+    let \( x = 0 \)
+    \begin{center}
+    left hand limit
+    \end{center}
+    \[
+    f'(0) = \lim_{h \to 0^-} \frac{f(0 + h) - f(0)}{h}
+    \]
+    \[
+    f'(0) = \lim_{h \to 0^-} \frac{max(0, 0 + h) - max(0, 0)}{h}
+    \]
+    \[
+    f'(0) = \lim_{h \to 0^-} \frac{0}{h} = 0
+    \]
+    
+    \newpage
+    \begin{center}
+    right hand limit
+    \end{center}
+    \[
+    f'(0) = \lim_{h \to 0^+} \frac{f(0 + h) - f(0)}{h}
+    \]
+    \[
+    f'(0) = \lim_{h \to 0^+} \frac{max(0, 0 + h) - max(0, 0)}{h}
+    \]
+    \[
+    f'(0) = \lim_{h \to 0^+} \frac{h}{h} = 1
+    \]
+
+\subsection{Sigmoid}
+\paragraph{Proof:}
+
+\begin{flushleft}
+    Let:
+    \[
+    \sigma(x) = \frac{1}{1 + e^{-x}}
+    \]
+
+    \[
+    \sigma'(x) = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right)
+    \]
+    \[
+    or
+    \]
+    \[
+    \sigma'(x) = \sigma(x) (1 - \sigma(x))
+    \]
+\end{flushleft}
+\vspace{0.5cm}
+
+\[
+f'(x) = \frac{(u'(x)v(x) - u(x)v'(x))}{(v(x))^2}
+\]
+
+\begin{center}
+    where
+    \[
+    \begin{Bmatrix}
+        u(x) = 1, & v(x) = 1 + e^{-x} \\
+        u'(x) = 0, & v'(x) = -e^{-x}
+    \end{Bmatrix}
+    \]
+\end{center}
+
+\[
+\sigma'(x) = \frac{0(1 + e^{-x}) - 1(-e^{-x})}{(1 + e^{-x})^2}
+\]
+\[
+\sigma'(x) = \frac{e^{-x}}{(1 + e^{-x})^2}
+\]
+
+\[
+\sigma'(x) = \frac{1}{1 + e^{-x}} \cdot \frac{e^{-x}}{1 + e^{-x}}
+\]
+
+\[
+\sigma'(x) = \sigma(x) \cdot {\frac{e^{-x}}{1 + e^{-x}}}
+\]
+
+\[
+\sigma'(x) = \sigma(x) (1 \cdot \frac{1}{1 + e^{-x}})
+\]
+
+\[
+\sigma'(x) = \sigma(x) (1 - \sigma(x))
+\]
+
+\vspace{1cm}
+\[
+Therefore
+\]
+
+\[
+\begin{Bmatrix}
+    x^{+} & \to & \infty, & \sigma(x) & \to & 1 \\
+    x^{-} & \to & -\infty, & \sigma(x) & \to & 0 \\
+\end{Bmatrix}
+\]
+
+\[
+Where
+\]
+
+\[
+\begin{Bmatrix}
+    x = 0, & \sigma(x) = \frac{1}{2}
+\end{Bmatrix}
+\]
+
+\newpage
+\subsection{Softmax}
+Let: \(k\) = number of classes
+
+\[
+f(x_i) = \frac{e^{x_i}}{\sum_{j=1}^{k} e^{x_j}}\
+\]
+
+
+
+\vspace{0.5cm}
+
+\[
+\large
+\frac{\partial f(x_i)}{\partial x_j} = \begin{cases}
+    \displaystyle\frac{e^{x_i} \sum_{j=1}^{k} e^{x_j} - e^{x_i} e^{x_j} }{( \sum_{j=1}^{k} e^{x_j})^2} & \text{if } i = j \\[2ex]\\
+    \displaystyle- \frac{e^{x_i} e^{x_j}}{( \sum_{j=1}^{k} e^{x_j})^2} & \text{if } i \neq j
+\end{cases}
+\]
+
+\vspace{0.5cm}
+\large Let: \(S = \sum_{j=1}^{k} e^{x_j}\)
+
+\[let \hspace{0.5cm} i = j\]
+
+\[
+\frac{\partial f(x_i)}{\partial x_i} = \frac{\partial}{\partial x_j}(\frac{e^{x_i}}{S})
+\]
+
+\vspace{0.5cm}
+
+\[
+= \frac{e^{x_i}\cdot S - e^{x_i} \cdot e^{x_j}}{(S)^2}
+\]
+
+\[
+= \frac{e^{x_i}(S - e^{x_i})}{(S)^2}
+\]
+
+\[
+= \frac{e^{x_i}}{S} - [\frac{e^{x_i}}{S}]^{2}
+\]
+\[
+= f(x)-(f(x))^{2}
+\]
+\[
+    = f(x_i)(1 - f(x_i))
+\]
+
+\[
+\frac{\partial f(x_i)}{\partial x_j} = \frac{e^{x_i} \cdot S - e^{x_i} \cdot e^{x_j}}{(S)^2}
+= \frac{e^{x_i} \sum_{j = 1}^{k} e^{x_j} - e^{x_i} \cdot e^{x_j}}{( \sum_{j = 1}^{k} e^{x_j})^{2}}
+\]
+
+\newpage
+\[
+let \hspace{0.5cm} i \neq j
+\]
+
+\[
+\frac{\partial f(x_i)}{\partial x_j} = \frac{\partial}{\partial x_j} \cdot \frac{e^{x_i}}{S}
+\]
+
+\[
+= - \frac{e^{x_i} \cdot e^{x_j}}{(S)^2} = -\frac{e^{x_i}}{S} \cdot \frac{e^{x_j}}{S}
+\]
+\[
+= -f(x_i) \cdot f(x_j)
+\]
+
 
 \section{Comparison of Activation Functions}
 
